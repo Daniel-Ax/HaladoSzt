@@ -1,4 +1,4 @@
-<!-- TextbookMarketplaceApp/templates/login.html -->
+<!-- TextbookMarketplaceApp/templates/login.html 
 {% extends 'base.html' %}
 
 {% block content %}
@@ -6,8 +6,30 @@
     <h2>Login</h2>
     <form method="post" class="form">
       {% csrf_token %}
-      <!-- Add your login form fields here -->
+       Add your login form fields here 
       <button type="submit" class="btn btn-primary">Login</button>
     </form>
   </div>
+{% endblock %} -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="row">
+      {% for product in products %}
+        <div class="col-md-4">
+          <div class="card">
+            <img class="card-img-top" src="{{ product.image_url }}" alt="{{ product.name }} Image">
+            <div class="card-body">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <p class="card-text">Price: ${{ product.price }}</p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}
+
+

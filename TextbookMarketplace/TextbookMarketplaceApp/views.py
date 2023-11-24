@@ -41,5 +41,13 @@ class CustomLoginView(LoginView):
 def login_view(request):
     return CustomLoginView.as_view()(request)
 
+# views.py
+
+from django.shortcuts import render
+from .models import Product
+
+def product_list(request):
+    products = Product.objects.all()
+    return render(request, 'index.html', {'products': products})
 
 
