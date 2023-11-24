@@ -1,45 +1,30 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+# WebshopApp/views.py
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
-
 
 def index(request):
-    return HttpResponse("Hello, this is your app's index view.")
+    return render(request, 'index.html')
 
-def home(request):
-    return HttpResponse("Welcome to the Textbook Marketplace!")
+def checkout(request):
+    return render(request, 'checkout.html')
 
-# TextbookMarketplaceApp/views.py
-from django.shortcuts import render, redirect
-from django.contrib.auth import login
-from .forms import CustomUserCreationForm
-from django.contrib.auth.views import LoginView
-from .forms import CustomAuthenticationForm
+def sell_notes(request):
+    return render(request, 'sell_notes.html')
 
+def login(request):
+    return render(request, 'login.html')
 
-def register(request):
+def reg(request):
+    return render(request, 'reg.html')
+
+def registration_view(request):
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('login')  # Redirect to the login page after registration
+            form.save()
+            # Felhasználó sikeresen regisztrálva, átirányítás az új nézetbe vagy oldalra.
+            return redirect('login')  # Cseréld le az 'index' azonosítót az általad kívántra.
     else:
-        form = CustomUserCreationForm()
-    return render(request, 'registration_form.html', {'form': form})
-
-class CustomLoginView(LoginView):
-    form_class = CustomAuthenticationForm
-    template_name = 'login.html'
-
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        return response
-
-def login_view(request):
-    return CustomLoginView.as_view()(request)
-
-
-
+        form = UserCreationForm()
+    return render(request, 'registration.html', {'form': form})

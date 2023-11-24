@@ -1,14 +1,12 @@
-from django.urls import path
-from TextbookMarketplaceApp.views import index, home, register, login_view  # Ensure correct imports
-# TextbookMarketplaceApp/urls.py
-from TextbookMarketplaceApp.views import register  # Correct the import
+# WebshopApp/urls.py
 
+from django.urls import path
+from .views import index, checkout, sell_notes, login, reg
 
 urlpatterns = [
     path('', index, name='index'),
-    path('index/', index, name='index'),
-    path('home/', home, name='home'),
-    path('register/', register, name='register'),
-    path('login/', login_view, name='login'),
-    # Other URL patterns go here
+    path('checkout/', checkout, name='checkout'),  # Új URL a fizető oldalhoz
+    path('sell_notes/', sell_notes, name='sell_notes'), #Új jegyzet hozzáadása
+    path('login', login, name='login'), #login view path
+    path('reg/', reg, name='reg') #reg view path
 ]
