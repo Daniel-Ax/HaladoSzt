@@ -2,6 +2,7 @@
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
+from .forms import RegistrationForm
 
 def index(request):
     return render(request, 'index.html')
@@ -15,16 +16,12 @@ def sell_notes(request):
 def login(request):
     return render(request, 'login.html')
 
-def reg(request):
-    return render(request, 'reg.html')
-
-def registration_view(request):
+def registration(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            # Felhasználó sikeresen regisztrálva, átirányítás az új nézetbe vagy oldalra.
-            return redirect('login')  # Cseréld le az 'index' azonosítót az általad kívántra.
+            return redirect('index')
     else:
-        form = UserCreationForm()
+        form = RegistrationForm()
     return render(request, 'registration.html', {'form': form})
