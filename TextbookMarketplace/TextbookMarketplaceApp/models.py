@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.models import User
 
 class YourModel(models.Model):
@@ -18,5 +19,8 @@ class Product(models.Model):
     institution = models.CharField(max_length=255,null=False)
     subject = models.CharField(max_length=255,null=False)
     description = models.TextField(null=True)
+
+    def get_absolute_url(self):
+        return reverse('product_detail', args=[str(self.id)])
 
 
