@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-4">
+        <div class="row">
+            {% for product in products %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="https://via.placeholder.com/150" alt="Product Image">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.institution }}</h5>
+                            <p class="card-text">Ár: {{ product.price }} HUF</p>
+                            <a href="{{ product.get_absolute_url }}" class="btn btn-info">Information</a>
+                            <button class="btn btn-primary">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

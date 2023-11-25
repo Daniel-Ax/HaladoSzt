@@ -13,10 +13,10 @@ class RegistrationForm(UserCreationForm):
         model = User  # Ha a User modellt használod
         fields = ['username', 'email', 'password1', 'password2']
 
+
 class SellNotesForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ['institution', 'subject', 'description', 'price', 'file']
 
     file = forms.FileField()
-

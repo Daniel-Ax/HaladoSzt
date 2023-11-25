@@ -22,8 +22,10 @@ class IndexView(TemplateView):
         context['products'] = Product.objects.all()
         return context
 
+
 class CheckoutView(LoginRequiredMixin, TemplateView):
     template_name = 'checkout.html'
+
 
 class SellNotesView(LoginRequiredMixin, View):
     template_name = 'sell_notes.html'
@@ -42,6 +44,7 @@ class SellNotesView(LoginRequiredMixin, View):
             return redirect('index_loged_in')
         return render(request, self.template_name, {'form': form})
 
+
 class LoginView(View):
     template_name = 'login.html'
     form_class = AuthenticationForm
@@ -56,6 +59,7 @@ class LoginView(View):
             auth_login(request, form.get_user())
             return redirect('index_loged_in')
         return render(request, self.template_name, {'form': form})
+
 
 class RegistrationView(View):
     template_name = 'registration.html'
@@ -72,18 +76,21 @@ class RegistrationView(View):
             return redirect('index')
         return render(request, self.template_name, {'form': form})
 
+
 class IndexLoggedInView(LoginRequiredMixin, TemplateView):
-    template_name = 'index_loged_in.html'
+    template_name = 'index_logged_in.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['products'] = Product.objects.all()
         return context
 
+
 class LogoutView(View):
     def get(self, request, *args, **kwargs):
         logout(request)
         return redirect('index')
+
 
 class ProductDetailView(TemplateView):
     template_name = 'product_detail.html'
@@ -93,6 +100,7 @@ class ProductDetailView(TemplateView):
         pk = kwargs.get('pk')
         context['product'] = get_object_or_404(Product, pk=pk)
         return context
+
 
 class AddToCartView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
@@ -110,6 +118,7 @@ class AddToCartView(LoginRequiredMixin, View):
         messages.success(request, f"{product.name} added to your cart.")
         return redirect(reverse('index_loged_in'))
 
+
 class ViewCartView(LoginRequiredMixin, TemplateView):
     template_name = 'cart.html'
 
@@ -120,9 +129,6 @@ class ViewCartView(LoginRequiredMixin, TemplateView):
         context['cart_items'] = cart.items.all()
         return context
 
-class BaseView(TemplateView):
-    template_name = 'base.html'
-
 
 class BaseView(TemplateView):
     template_name = 'base.html'
@@ -132,8 +138,10 @@ class BaseView(TemplateView):
         context['products'] = Product.objects.all()
         return context
 
+
 class IndexView(BaseView):
     template_name = 'index.html'
+
 
 class SellNotesView(BaseView):
     template_name = 'sell_notes.html'
