@@ -22,5 +22,14 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('product_detail', args=[str(self.id)])
+    
+class CartItem(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+class Cart(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    items = models.ManyToManyField(CartItem)
 
 
