@@ -4,6 +4,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from .forms import RegistrationForm
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login as auth_login
+from django.contrib.auth.decorators import login_required
+
 
 def index(request):
     return render(request, 'index.html')
@@ -16,14 +19,13 @@ def sell_notes(request):
 
 def login(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request, request.POST)
+        form = AuthenticationForm(data=request.POST)
         if form.is_valid():
-            login(request, form.get_user())
+            auth_login(request, form.get_user())
             return redirect('index_loged_in')  # Cseréld le az 'index' azonosítót az általad kívántra.
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
-
 
 def registration(request):
     if request.method == 'POST':
@@ -34,3 +36,7 @@ def registration(request):
     else:
         form = RegistrationForm()
     return render(request, 'registration.html', {'form': form})
+
+@login_required
+def index_loged_in(request):
+    return render(request, 'index_loged_in.html')
