@@ -16,10 +16,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'login' %}">Login Out</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'registration' %}">Register</a>
+                <a class="nav-link" href="{% url 'logout' %}">Login Out</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'sell_notes' %}">Jegyzet eladás</a> <!-- Új menüpont -->
@@ -32,45 +29,20 @@
 </nav>
 
 <div class="container mt-4">
-  <div class="row">
-      <div class="col-md-4">
-          <div class="card">
-              <img class="card-img-top" src="https://via.placeholder.com/150" alt="Product Image">
-              <div class="card-body">
-                  <h5 class="card-title">Product Name</h5>
-                  <p class="card-text">Ár: 120 HUF</p>
-                  <button class="btn btn-primary">Add to Cart</button>
-              </div>
-          </div>
-      </div>
-
-      <div class="col-md-4">
-          <div class="card">
-              <img class="card-img-top" src="https://via.placeholder.com/150" alt="Product Image">
-              <div class="card-body">
-                  <h5 class="card-title">Product Name</h5>
-                  <p class="card-text">Ár: 100 HUF</p>
-                  <button class="btn btn-primary">Add to Cart</button>
-              </div>
-          </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card">
-            <img class="card-img-top" src="https://via.placeholder.com/150" alt="Product Image">
-            <div class="card-body">
-                <h5 class="card-title">Product Name</h5>
-                <p class="card-text">Ár: 100 HUF</p>
-                <button class="btn btn-primary">Add to Cart</button>
+    <div class="row">
+        {% for product in products %}
+            <div class="col-md-4">
+                <div class="card">
+                    <img class="card-img-top" src="https://via.placeholder.com/150" alt="Product Image">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.institution }}</h5>
+                        <p class="card-text">Ár: {{ product.price }} HUF</p>
+                        <button class="btn btn-primary">Add to Cart</button>
+                    </div>
+                </div>
             </div>
-        </div>
+        {% endfor %}
     </div>
-
-      <!-- Add more product cards as needed -->
-
-  </div>
-</div>
-  </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
