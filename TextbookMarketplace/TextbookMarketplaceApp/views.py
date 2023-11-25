@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views import View
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login as auth_login, logout
+from django.contrib.auth import login as auth_login, logout, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
@@ -41,7 +41,7 @@ class SellNotesView(LoginRequiredMixin, View):
             product = form.save(commit=False)
             product.seller = request.user
             product.save()
-            return redirect('index_loged_in')
+            return redirect('index_logged_in')
         return render(request, self.template_name, {'form': form})
 
 
@@ -57,7 +57,7 @@ class LoginView(View):
         form = self.form_class(data=request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return redirect('index_loged_in')
+            return redirect('index_logged_in')
         return render(request, self.template_name, {'form': form})
 
 
@@ -72,8 +72,9 @@ class RegistrationView(View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('index')
+            user = form.save()
+            login(request, user)
+            return redirect('index_logged_in')
         return render(request, self.template_name, {'form': form})
 
 
@@ -116,7 +117,7 @@ class AddToCartView(LoginRequiredMixin, View):
             cart_item.save()
 
         messages.success(request, f"{product.name} added to your cart.")
-        return redirect(reverse('index_loged_in'))
+        return redirect(reverse('index_logged_in'))
 
 
 class ViewCartView(LoginRequiredMixin, TemplateView):

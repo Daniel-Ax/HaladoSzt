@@ -7,7 +7,6 @@ from .models import Product
 
 
 class RegistrationForm(UserCreationForm):
-    email = forms.EmailField()
 
     class Meta:
         model = User  # Ha a User modellt használod
