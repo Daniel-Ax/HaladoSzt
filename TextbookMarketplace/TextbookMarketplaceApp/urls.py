@@ -1,6 +1,8 @@
 # TextbookMarketplaceApp/urls.py
-
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
+
 from .views import (
     IndexView,
     CheckoutView,
@@ -11,8 +13,7 @@ from .views import (
     LogoutView,
     ProductDetailView,
     AddToCartView,
-    ViewCartView,
-    BaseView,
+    ViewCartView
 )
 
 urlpatterns = [
@@ -25,6 +26,7 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('product/<int:pk>/', ProductDetailView.as_view(), name='product_detail'),
     path('add_to_cart/<int:product_id>/', AddToCartView.as_view(), name='add_to_cart'),
-    path('view_cart/', ViewCartView.as_view(), name='view_cart'),
-    path('base/', BaseView.as_view(), name='base'),
+    path('view_cart/', ViewCartView.as_view(), name='view_cart')
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

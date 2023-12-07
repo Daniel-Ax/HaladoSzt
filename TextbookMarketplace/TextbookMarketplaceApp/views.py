@@ -1,17 +1,19 @@
-# WebshopApp/views.py
+import logging
 
+from django.contrib import messages
+from django.contrib.auth import login as auth_login, logout, login
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 from django.views.generic import TemplateView
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login as auth_login, logout, login
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib import messages
-from django.shortcuts import get_object_or_404
-from .models import Product, Cart, CartItem
+
 from .forms import SellNotesForm, RegistrationForm
-from django.contrib.auth.mixins import LoginRequiredMixin
+from .models import Product, Cart, CartItem
+
+logger = logging.getLogger(__name__)
 
 
 class IndexView(TemplateView):
@@ -42,7 +44,9 @@ class SellNotesView(LoginRequiredMixin, View):
             product.seller = request.user
             product.save()
             return redirect('index_logged_in')
-        return render(request, self.template_name, {'form': form})
+        else:
+            logger.error(form.errors)
+            return render(request, self.template_name, {'form': form})
 
 
 class LoginView(View):
@@ -138,11 +142,3 @@ class BaseView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['products'] = Product.objects.all()
         return context
-
-
-class IndexView(BaseView):
-    template_name = 'index.html'
-
-
-class SellNotesView(BaseView):
-    template_name = 'sell_notes.html'

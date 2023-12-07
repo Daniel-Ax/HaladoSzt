@@ -18,16 +18,28 @@
                 <input type="text" class="form-control" id="subject" name="subject" required>
             </div>
             <div class="form-group">
+                <label for="subject">Title of the note</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="form-group">
                 <label for="description">Short description</label>
                 <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <input type="text" class="form-control" id="category" name="category" required>
             </div>
             <div class="form-group">
                 <label for="price">Price (HUF)</label>
                 <input type="number" class="form-control" id="price" name="price" required>
             </div>
             <div class="form-group">
-                <label for="file">Upload file</label>
-                <input type="file" class="form-control-file" id="file" name="file" required>
+                <label for="image">Upload file</label>
+                <input type="file" class="form-control-file" id="image" name="image" required>
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="is_available" name="is_available" checked>
+                <label class="form-check-label" for="is_available">Available for Sale</label>
             </div>
             <button type="submit" class="btn btn-primary">Sell</button>
         </form>

@@ -13,8 +13,9 @@
         <h2>{{ product.name }} Details</h2>
         <p>Price: ${{ product.price }}</p>
         <p>Description: {{ product.description }}</p>
-
-        <!-- Add more details as needed -->
+        <p>Category: {{ product.category }}</p>
+        <p>Date Posted: {{ product.date_posted|date:"F d, Y" }}</p>
+        <p>Available: {{ product.is_available|yesno:"Yes,No" }}</p>
 
     </div>
 {% endblock %}
