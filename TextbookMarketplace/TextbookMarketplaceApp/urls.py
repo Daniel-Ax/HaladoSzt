@@ -5,21 +5,17 @@ from django.urls import path
 
 from .views import (
     IndexView,
-    CheckoutView,
     SellNotesView,
     LoginView,
     RegistrationView,
     IndexLoggedInView,
     LogoutView,
     ProductDetailView,
-    AddToCartView,
-    ViewCartView,
     DeleteProductView
 )
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
-    path('checkout/', CheckoutView.as_view(), name='checkout'),
     path('sell_notes/', SellNotesView.as_view(), name='sell_notes'),
     path('product/delete/<int:product_id>/', DeleteProductView.as_view(), name='delete_product'),
     path('login/', LoginView.as_view(), name='login'),
@@ -27,8 +23,6 @@ urlpatterns = [
     path('index_logged_in/', IndexLoggedInView.as_view(), name='index_logged_in'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('product/<int:pk>/', ProductDetailView.as_view(), name='product_detail'),
-    path('add_to_cart/<int:product_id>/', AddToCartView.as_view(), name='add_to_cart'),
-    path('view_cart/', ViewCartView.as_view(), name='view_cart')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
