@@ -92,7 +92,7 @@ class LogoutView(View):
         return redirect('index')
 
 
-class ProductDetailView(TemplateView):
+class ProductDetailView(LoginRequiredMixin, TemplateView):
     template_name = 'product_detail.html'
 
     def get_context_data(self, **kwargs):
