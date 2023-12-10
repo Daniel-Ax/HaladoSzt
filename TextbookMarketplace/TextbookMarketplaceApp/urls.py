@@ -8,7 +8,6 @@ from .views import (
     SellNotesView,
     LoginView,
     RegistrationView,
-    IndexLoggedInView,
     LogoutView,
     ProductDetailView,
     DeleteProductView
@@ -20,7 +19,6 @@ urlpatterns = [
     path('product/delete/<int:product_id>/', DeleteProductView.as_view(), name='delete_product'),
     path('login/', LoginView.as_view(), name='login'),
     path('registration/', RegistrationView.as_view(), name='registration'),
-    path('index_logged_in/', IndexLoggedInView.as_view(), name='index_logged_in'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('product/<int:pk>/', ProductDetailView.as_view(), name='product_detail'),
 ]

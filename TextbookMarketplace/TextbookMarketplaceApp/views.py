@@ -1,4 +1,3 @@
-import logging
 import os
 
 from django.contrib.auth import login as auth_login, logout, login
@@ -13,8 +12,6 @@ from django.views.generic import TemplateView
 from .forms import SellNotesForm, RegistrationForm
 from .models import Product
 
-logger = logging.getLogger(__name__)
-
 
 class DeleteProductView(LoginRequiredMixin, View):
     def post(self, request, product_id):
@@ -25,7 +22,7 @@ class DeleteProductView(LoginRequiredMixin, View):
             if os.path.isfile(product.image.path):
                 os.remove(product.image.path)
         product.delete()
-        return redirect('index_logged_in')
+        return redirect('index')
 
 
 class IndexView(TemplateView):
@@ -51,9 +48,8 @@ class SellNotesView(LoginRequiredMixin, View):
             product = form.save(commit=False)
             product.seller = request.user
             product.save()
-            return redirect('index_logged_in')
+            return redirect('index')
         else:
-            logger.error(form.errors)
             return render(request, self.template_name, {'form': form})
 
 
@@ -69,7 +65,7 @@ class LoginView(View):
         form = self.form_class(data=request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return redirect('index_logged_in')
+            return redirect('index')
         return render(request, self.template_name, {'form': form})
 
 
@@ -86,17 +82,8 @@ class RegistrationView(View):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('index_logged_in')
+            return redirect('index')
         return render(request, self.template_name, {'form': form})
-
-
-class IndexLoggedInView(LoginRequiredMixin, TemplateView):
-    template_name = 'index_logged_in.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['products'] = Product.objects.all()
-        return context
 
 
 class LogoutView(View):
@@ -112,13 +99,4 @@ class ProductDetailView(TemplateView):
         context = super().get_context_data(**kwargs)
         pk = kwargs.get('pk')
         context['product'] = get_object_or_404(Product, pk=pk)
-        return context
-
-
-class BaseView(TemplateView):
-    template_name = 'base.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['products'] = Product.objects.all()
         return context
