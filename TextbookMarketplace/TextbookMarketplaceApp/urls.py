@@ -5,7 +5,8 @@ from django.urls import path
 
 from .views import (
     IndexView,
-    SellNotesView,
+    MyProductsView,
+    SellProductView,
     LoginView,
     RegistrationView,
     LogoutView,
@@ -15,7 +16,8 @@ from .views import (
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
-    path('sell_notes/', SellNotesView.as_view(), name='sell_notes'),
+    path('my_products', MyProductsView.as_view(), name='my_products'),
+    path('sell_product/', SellProductView.as_view(), name='sell_product'),
     path('product/delete/<int:product_id>/', DeleteProductView.as_view(), name='delete_product'),
     path('login/', LoginView.as_view(), name='login'),
     path('registration/', RegistrationView.as_view(), name='registration'),

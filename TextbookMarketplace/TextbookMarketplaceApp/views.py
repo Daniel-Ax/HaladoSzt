@@ -34,8 +34,17 @@ class IndexView(TemplateView):
         return context
 
 
-class SellNotesView(LoginRequiredMixin, View):
-    template_name = 'sell_notes.html'
+class MyProductsView(LoginRequiredMixin, TemplateView):
+    template_name = 'my_products.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['products'] = Product.objects.filter(seller=self.request.user)
+        return context
+
+
+class SellProductView(LoginRequiredMixin, View):
+    template_name = 'sell_product.html'
     form_class = SellNotesForm
 
     def get(self, request, *args, **kwargs):

@@ -2,25 +2,23 @@
 
 {% block title %}<title>{{ product.name }} details</title>{% endblock %}
 
-{% block auth_navb_extra %}
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'index' %}">Back to Products</a>
-    </li>
-{% endblock %}
-
 {% block content %}
     <div class="container mt-4">
-        <h2>{{ product.name }} Details</h2>
+        <h2>{{ product.name }} details</h2>
         <p>Price: ${{ product.price }}</p>
         <p>Description: {{ product.description }}</p>
         <p>Category: {{ product.category }}</p>
         <p>Date Posted: {{ product.date_posted|date:"F d, Y" }}</p>
         <p>Available: {{ product.is_available|yesno:"Yes,No" }}</p>
-        {% if user.is_authenticated and product.seller == user %}
+        {% if product.is_available %}
+            <p>Seller email: {{ product.seller.email }}
+        {% endif %}
+        {% if product.seller == user %}
             <form action="{% url 'delete_product' product.id %}" method="post">
                 {% csrf_token %}
                 <input type="submit" value="Delete">
             </form>
         {% endif %}
+        <a href="/" class="btn btn-info">Back to Products</a>
     </div>
 {% endblock %}

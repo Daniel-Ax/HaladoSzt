@@ -3,10 +3,22 @@
 {% block title %}<title>Registration</title>{% endblock %}
 
 {% block content %}
-    <h2>Registration</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Register</button>
-    </form>
+    <div class="container">
+        <h2 class="mt-4 mb-4">Registration</h2>
+        <form method="post" class="needs-validation" novalidate>
+            {% csrf_token %}
+            <div class="form-group">
+                {% for field in form %}
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field.errors }}
+                    {{ field }}
+                    <br>
+                    <div class="invalid-feedback">
+                        Please provide a valid {{ field.label|lower }}.
+                    </div>
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
 {% endblock %}
