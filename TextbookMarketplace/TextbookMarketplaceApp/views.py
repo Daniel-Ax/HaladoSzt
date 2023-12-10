@@ -1,9 +1,11 @@
 import logging
+import os
 
 from django.contrib import messages
 from django.contrib.auth import login as auth_login, logout, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -14,6 +16,18 @@ from .forms import SellNotesForm, RegistrationForm
 from .models import Product, Cart, CartItem
 
 logger = logging.getLogger(__name__)
+
+
+class DeleteProductView(LoginRequiredMixin, View):
+    def post(self, request, product_id):
+        product = get_object_or_404(Product, id=product_id)
+        if product.seller != request.user:
+            raise PermissionDenied
+        if product.image:
+            if os.path.isfile(product.image.path):
+                os.remove(product.image.path)
+        product.delete()
+        return redirect('index_logged_in')
 
 
 class IndexView(TemplateView):

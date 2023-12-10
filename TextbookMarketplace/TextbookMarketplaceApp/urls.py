@@ -13,13 +13,15 @@ from .views import (
     LogoutView,
     ProductDetailView,
     AddToCartView,
-    ViewCartView
+    ViewCartView,
+    DeleteProductView
 )
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
     path('checkout/', CheckoutView.as_view(), name='checkout'),
     path('sell_notes/', SellNotesView.as_view(), name='sell_notes'),
+    path('product/delete/<int:product_id>/', DeleteProductView.as_view(), name='delete_product'),
     path('login/', LoginView.as_view(), name='login'),
     path('registration/', RegistrationView.as_view(), name='registration'),
     path('index_logged_in/', IndexLoggedInView.as_view(), name='index_logged_in'),

@@ -16,6 +16,11 @@
         <p>Category: {{ product.category }}</p>
         <p>Date Posted: {{ product.date_posted|date:"F d, Y" }}</p>
         <p>Available: {{ product.is_available|yesno:"Yes,No" }}</p>
-
+        {% if user.is_authenticated and product.seller == user %}
+            <form action="{% url 'delete_product' product.id %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Delete">
+            </form>
+        {% endif %}
     </div>
 {% endblock %}
