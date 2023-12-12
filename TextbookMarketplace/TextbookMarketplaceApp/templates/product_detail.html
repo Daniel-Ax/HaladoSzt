@@ -5,7 +5,7 @@
 {% block content %}
     <div class="container mt-4">
         <h2>{{ product.name }} details</h2>
-        <p>Price: ${{ product.price }}</p>
+        <p>Price: {{ product.price }} HUF</p>
         <p>Description: {{ product.description }}</p>
         <p>Category: {{ product.category }}</p>
         <p>Date Posted: {{ product.date_posted|date:"F d, Y" }}</p>
@@ -19,6 +19,7 @@
                 <input type="submit" value="Delete">
             </form>
         {% endif %}
+        <br />
         <a href="/" class="btn btn-info">Back to Products</a>
     </div>
 {% endblock %}
