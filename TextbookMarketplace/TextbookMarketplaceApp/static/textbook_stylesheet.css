@@ -2,6 +2,10 @@
     margin-left: 1rem;
 }
 
+.maincontainer {
+    padding: 2vw;
+}
+
 .col-center {
     margin: 0 auto;
 }

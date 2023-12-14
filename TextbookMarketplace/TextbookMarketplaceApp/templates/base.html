@@ -37,6 +37,9 @@
                     <a class="nav-link" href="{% url 'sell_product' %}">Sell notes</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'settings' %}">Settings</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                 </li>
                 {% block auth_navb_extra %}{% endblock %}
@@ -52,6 +55,8 @@
         </ul>
     </div>
 </nav>
-{% block content %}{% endblock %}
+<div class="maincontainer">
+    {% block content %}{% endblock %}
+</div>
 </body>
 </html>

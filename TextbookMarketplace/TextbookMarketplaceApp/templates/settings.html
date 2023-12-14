@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>Settings</title>{% endblock %}
+
+{% block content %}
+<h2>Settings</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Change password</h3>
+            <form method="post" class="form">
+                {% csrf_token %}
+                {{ form_pwdchange.as_p }}
+                <button type="submit" class="btn btn-primary">OK</button>
+            </form>
+        </div>
+        <!-- change email would come here -->
+    </div>
+{% endblock %}

@@ -1,7 +1,7 @@
 import os
 
-from django.contrib.auth import login as auth_login, logout, login
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login as auth_login, logout, login, update_session_auth_hash
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
@@ -94,6 +94,20 @@ class RegistrationView(View):
             return redirect('index')
         return render(request, self.template_name, {'form': form})
 
+class SettingsView(LoginRequiredMixin, View):
+    template_name = 'settings.html'
+
+    def get(self, request, *args, **kwargs):
+        form_pwdchange = PasswordChangeForm(request.user)
+        return render(request, self.template_name, {'form_pwdchange': form_pwdchange})
+
+    def post(self, request, *args, **kwargs):
+        form_pwdchange = PasswordChangeForm(user=request.user, data=request.POST)
+        if form_pwdchange.is_valid():
+            form_pwdchange.save()
+            update_session_auth_hash(request, form_pwdchange.user)
+            return redirect('index')
+        return render(request, self.template_name, {'form_pwdchange': form_pwdchange})
 
 class LogoutView(View):
     def get(self, request, *args, **kwargs):
