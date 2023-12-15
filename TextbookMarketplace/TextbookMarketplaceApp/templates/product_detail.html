@@ -5,14 +5,12 @@
 {% block content %}
     <div class="container mt-4">
         <h2>{{ product.name }} details</h2>
+        <p>Author: {{ product.author }}</p>
         <p>Price: {{ product.price }} HUF</p>
-        <p>Description: {{ product.description }}</p>
         <p>Category: {{ product.category }}</p>
         <p>Date Posted: {{ product.date_posted|date:"F d, Y" }}</p>
-        <p>Available: {{ product.is_available|yesno:"Yes,No" }}</p>
-        {% if product.is_available %}
-            <p>Seller email: {{ product.seller.email }}
-        {% endif %}
+        <p>Seller email: {{ product.seller.email }}
+        <p>Description: {{ product.description }}</p>
         {% if product.seller == user %}
             <form action="{% url 'delete_product' product.id %}" method="post">
                 {% csrf_token %}

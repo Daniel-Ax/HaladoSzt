@@ -7,6 +7,8 @@ from .models import Product
 
 
 class RegistrationForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+    
     class Meta:
         model = User  # Ha a User modellt használod
         fields = ['username', 'email', 'password1', 'password2']
@@ -15,11 +17,10 @@ class RegistrationForm(UserCreationForm):
 class SellNotesForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['institution', 'name', 'subject', 'description', 'price', 'category', 'is_available', 'image']
+        fields = ['author', 'name', 'subject', 'description', 'price', 'category', 'image']
 
     image = forms.FileField()
     category = forms.CharField(max_length=255)
-    is_available = forms.BooleanField(required=False, initial=True)
 
 class EmailChangeForm(forms.Form):
     error_messages = {

@@ -16,12 +16,11 @@ class Product(models.Model):
     name = models.CharField(max_length=255, null=False)
     price = models.DecimalField(max_digits=10, decimal_places=2, null=False)
     image = models.ImageField(upload_to='product_images/', null=True, blank=True)
-    institution = models.CharField(max_length=255, null=False)
+    author = models.CharField(max_length=255, null=False)
     subject = models.CharField(max_length=255, null=False)
     description = models.TextField(null=True)
     category = models.CharField(max_length=255, null=False)
     date_posted = models.DateTimeField(auto_now_add=True)
-    is_available = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
         if self.image:
@@ -39,3 +38,8 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('product_detail', args=[str(self.id)])
+    
+    def contains_text(self, text):
+        text = text.lower()
+        return text in self.name.lower() or text in str(self.price) or text in self.author.lower() or\
+            text in self.subject.lower() or text in self.description.lower() or text in self.category.lower()

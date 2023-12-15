@@ -28,9 +28,19 @@ class DeleteProductView(LoginRequiredMixin, View):
 class IndexView(TemplateView):
     template_name = 'index.html'
 
+    def post(self, request, *args, **kwargs):
+        print(request.POST)
+        context = self.get_context_data()
+        if request.POST['searchtext']:
+            searchtext = request.POST['searchtext']
+            context['products'] = [o for o in context['products'] if o.contains_text(searchtext)]
+            context['searchtext'] = searchtext
+        return render(request, self.template_name, context)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['products'] = Product.objects.all()
+        context['searchtext'] = ''
         return context
 
 
