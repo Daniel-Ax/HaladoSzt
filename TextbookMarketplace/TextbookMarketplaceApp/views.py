@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import TemplateView
 
-from .forms import SellNotesForm, RegistrationForm
+from .forms import SellNotesForm, RegistrationForm, EmailChangeForm
 from .models import Product
 
 
@@ -99,15 +99,29 @@ class SettingsView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         form_pwdchange = PasswordChangeForm(request.user)
-        return render(request, self.template_name, {'form_pwdchange': form_pwdchange})
+        form_emailchange = EmailChangeForm(request.user)
+        return render(request, self.template_name, {
+            'form_pwdchange': form_pwdchange,
+            'form_emailchange': form_emailchange})
 
     def post(self, request, *args, **kwargs):
-        form_pwdchange = PasswordChangeForm(user=request.user, data=request.POST)
-        if form_pwdchange.is_valid():
-            form_pwdchange.save()
-            update_session_auth_hash(request, form_pwdchange.user)
-            return redirect('index')
-        return render(request, self.template_name, {'form_pwdchange': form_pwdchange})
+        form_pwdchange = PasswordChangeForm(user=request.user)
+        form_emailchange = EmailChangeForm(user=request.user)
+        if "pwdchange" in request.POST:
+            form_pwdchange = PasswordChangeForm(user=request.user, data=request.POST)
+            if form_pwdchange.is_valid():
+                form_pwdchange.save()
+                update_session_auth_hash(request, form_pwdchange.user)
+                return redirect('index')
+        elif "emailchange" in request.POST:
+            form_emailchange = EmailChangeForm(user=request.user, data=request.POST)
+            if form_emailchange.is_valid():
+                form_emailchange.save()
+                return redirect('index')
+        return render(request, self.template_name, {
+            'form_pwdchange': form_pwdchange,
+            'form_emailchange': form_emailchange})
+            
 
 class LogoutView(View):
     def get(self, request, *args, **kwargs):

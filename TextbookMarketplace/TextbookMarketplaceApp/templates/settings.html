@@ -10,9 +10,16 @@
             <form method="post" class="form">
                 {% csrf_token %}
                 {{ form_pwdchange.as_p }}
-                <button type="submit" class="btn btn-primary">OK</button>
+                <button type="submit" name="pwdchange" class="btn btn-primary">OK</button>
             </form>
         </div>
-        <!-- change email would come here -->
+        <div class="col-md-6">
+            <h3>Change email</h3>
+            <form method="post" class="form">
+                {% csrf_token %}
+                {{ form_emailchange.as_p }}
+                <button type="submit" name="emailchange" class="btn btn-primary">OK</button>
+            </form>
+        </div>
     </div>
 {% endblock %}
