@@ -6,10 +6,10 @@
     <form method="post" class="form">
         {% csrf_token %}
         <div class="row">
-            <div class="col-sm-11">
+            <div class="col-md-10">
                 <input id="searchbar" name="searchtext" type="text" class="form-text form-control form-text" value="{{searchtext}}" />
             </div>
-            <div class="col-sm-1">
+            <div class="col-md-2">
                 <input type="submit" class="btn btn-primary form-control" value="Search" />
             </div>
         </div>
@@ -19,9 +19,9 @@
             <h3>No products to show.</h3>
         </div>
     {% else %}
-        <div class="row col-md-11 col-center">
+        <div class="row col-md-12 col-center">
             {% for product in products %}
-                <div class="card col-md-4">
+                <div class="card">
                     {% if product.image %}
                         <img class="card-img-top" src="{{ product.image.url }}" alt="Product Image">
                     {% else %}
