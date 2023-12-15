@@ -22,4 +22,13 @@
             </form>
         </div>
     </div>
+    <br />
+    <div class="row">
+        <h3>Delete account</h3>
+        <h4>Warning: clicking this button will delete your account and all associated listings.</h4>
+        <form method="post" class="form">
+            {% csrf_token %}
+            <button type="submit" name="deluser" class="btn btn-outline-danger">Delete my account</button>
+        </form>
+    </div>
 {% endblock %}

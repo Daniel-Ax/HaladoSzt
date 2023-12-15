@@ -1,6 +1,6 @@
 import os
 
-from django.contrib.auth import login as auth_login, logout, login, update_session_auth_hash
+from django.contrib.auth import login as auth_login, logout, login, update_session_auth_hash, get_user_model
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
@@ -135,6 +135,12 @@ class SettingsView(LoginRequiredMixin, View):
             if form_emailchange.is_valid():
                 form_emailchange.save()
                 return redirect('index')
+        elif "deluser" in request.POST:
+            user_pk = request.user.pk
+            logout(request)
+            User = get_user_model()
+            User.objects.filter(pk=user_pk).delete()
+            return redirect('index')
         return render(request, self.template_name, {
             'form_pwdchange': form_pwdchange,
             'form_emailchange': form_emailchange})
